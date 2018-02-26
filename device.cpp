@@ -537,7 +537,7 @@ unsigned int Device::executeNextInstruction()
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("MUL r%d,r%d") % (int)d % (int)r;
     reg01_ = R;
-    cpu_.sreg_.C = R & 0x8000;
+    cpu_.sreg_.C = (R >> 15) & 1;
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
     opcode_cycles = 2;
@@ -551,7 +551,7 @@ unsigned int Device::executeNextInstruction()
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("MULS r%d,r%d") % (int)d % (int)r;
     reg01_ = R;
-    cpu_.sreg_.C = R & 0x8000;
+    cpu_.sreg_.C = (R >> 15) & 1;
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
     opcode_cycles = 2;
@@ -565,7 +565,7 @@ unsigned int Device::executeNextInstruction()
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("MULSU r%d,r%d") % (int)d % (int)r;
     reg01_ = R;
-    cpu_.sreg_.C = R & 0x8000;
+    cpu_.sreg_.C = (R >> 15) & 1;
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
     opcode_cycles = 2;
@@ -578,7 +578,7 @@ unsigned int Device::executeNextInstruction()
     uint8_t Rr = regfile_[r];
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("FMUL r%d,r%d") % (int)d % (int)r;
-    cpu_.sreg_.C = R & 0x8000; // before left shift
+    cpu_.sreg_.C = (R >> 15) & 1; // before left shift
     reg01_ = (R <<= 1);
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
@@ -592,7 +592,7 @@ unsigned int Device::executeNextInstruction()
     int16_t Rr = u8_to_s16(regfile_[r]);
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("FMULS r%d,r%d") % (int)d % (int)r;
-    cpu_.sreg_.C = R & 0x8000; // before left shift
+    cpu_.sreg_.C = (R >> 15) & 1; // before left shift
     reg01_ = (R <<= 1);
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
@@ -606,7 +606,7 @@ unsigned int Device::executeNextInstruction()
     uint8_t Rr = regfile_[r];
     uint16_t R = Rd * Rr;
     DLOGF_OPCODE("FMULSU r%d,r%d") % (int)d % (int)r;
-    cpu_.sreg_.C = R & 0x8000; // before left shift
+    cpu_.sreg_.C = (R >> 15) & 1; // before left shift
     reg01_ = (R <<= 1);
     cpu_.sreg_.Z = R == 0;
     cpu_.pc_++;
