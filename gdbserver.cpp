@@ -40,7 +40,7 @@ typename nbits_to_utype<N>::type parse_hex_le(const char* buf)
   typename nbits_to_utype<N>::type ret = 0;
   for(size_t i=0; i<N/4; i+=2) {
     int d0 = parse_hex_digit(buf[i]);
-    int d1 = parse_hex_digit(buf[i]);
+    int d1 = parse_hex_digit(buf[i+1]);
     if(d0 == -1 || d1 == -1) {
       throw GdbServerError("invalid hex value");
     }
