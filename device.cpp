@@ -752,10 +752,10 @@ unsigned int Device::executeNextInstruction()
     uint16_t R = Rd + K;
     DLOGF_OPCODE("ADIW r%d:r%d,0x%02X") % (int)d % (int)(d+1) % (int)K;
     register_set<16>(&regfile_[d], R);
-    cpu_.sreg_.C = (~R & Rd) & 0x8000;
+    cpu_.sreg_.C = ((~R & Rd) >> 15) & 1;
     cpu_.sreg_.Z = R == 0;
-    cpu_.sreg_.N = R & 0x8000;
-    cpu_.sreg_.V = (R & ~Rd) & 0x8000;
+    cpu_.sreg_.N = (R >> 15) & 1;
+    cpu_.sreg_.V = ((R & ~Rd) >> 15) & 1;
     cpu_.sreg_.S = cpu_.sreg_.N ^ cpu_.sreg_.V;
     cpu_.pc_++;
   }
@@ -767,10 +767,10 @@ unsigned int Device::executeNextInstruction()
     uint16_t R = Rd - K;
     DLOGF_OPCODE("SBIW r%d,0x%02X") % (int)d % (int)K;
     register_set<16>(&regfile_[d], R);
-    cpu_.sreg_.C = (R & ~Rd) & 0x8000;
+    cpu_.sreg_.C = ((R & ~Rd) >> 15) & 1;
     cpu_.sreg_.Z = R == 0;
-    cpu_.sreg_.N = R & 0x8000;
-    cpu_.sreg_.V = (R & ~Rd) & 0x8000;
+    cpu_.sreg_.N = (R >> 15) & 1;
+    cpu_.sreg_.V = ((~R & Rd) >> 15) & 1;
     cpu_.sreg_.S = cpu_.sreg_.N ^ cpu_.sreg_.V;
     cpu_.pc_++;
   }
