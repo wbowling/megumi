@@ -1,0 +1,4 @@
+[USARTC0]
+link_type=serial
+link_path=/dev/pts/3
+
