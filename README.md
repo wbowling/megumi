@@ -1,6 +1,12 @@
 # megumi
 Emulator for Atmel AVR XMEGA microcontrollers
 
+## Requirements
+
+```bash
+sudo apt-get install build-essential libboost-dev libboost-program-options-dev
+```
+
 ## Compile
 
 ```bash
