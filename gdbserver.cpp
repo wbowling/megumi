@@ -21,7 +21,7 @@
 
 bool do_break = false;
 void signalHandler( int signum ) {
-   std::cout << "Interrupt signal (" << signum << ") received GDB.\n" << std::flush;
+   std::cout << "Interrupt signal (" << signum << ") received\n" << std::flush;
    if (do_break) {
      exit(signum);
    } else {
@@ -140,7 +140,7 @@ GdbServer::~GdbServer()
 
 void GdbServer::run(int port)
 {
-  signal(SIGINT, signalHandler);
+  signal(SIGTSTP, signalHandler);
 #ifdef __WIN32
   WSADATA wsa_data;
   WSAStartup(MAKEWORD(2,2), &wsa_data);
