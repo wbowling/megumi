@@ -11,11 +11,23 @@
 #endif
 #include <errno.h>
 #include <string.h>
+#include <iostream>
+#include <csignal>
 #include "gdbserver.h"
 #include "device.h"
 #include "common.h"
 #include "log.h"
 
+
+bool do_break = false;
+void signalHandler( int signum ) {
+   std::cout << "Interrupt signal (" << signum << ") received GDB.\n" << std::flush;
+   if (do_break) {
+     exit(signum);
+   } else {
+     do_break = true;
+  }
+}
 
 // parse/build helper methods
 
@@ -128,6 +140,7 @@ GdbServer::~GdbServer()
 
 void GdbServer::run(int port)
 {
+  signal(SIGINT, signalHandler);
 #ifdef __WIN32
   WSADATA wsa_data;
   WSAStartup(MAKEWORD(2,2), &wsa_data);
@@ -193,6 +206,10 @@ void GdbServer::execContinue()
   for(;;) {
     // handle BREAK and breakpoints
     device_->step();
+    if (do_break) {
+      do_break = false;
+      return;
+    }
     if(breakpoints_.find(device_->getPC()) != breakpoints_.end()) {
       return;
     } else if(device_->breaked()) {
