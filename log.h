@@ -37,7 +37,7 @@ class Message
 };
 
 
-// For DLOG implementation in NDEBUG mode
+// For DLOG implementation in DEBUG mode
 struct VoidMessage
 {
   VoidMessage() {}
@@ -59,7 +59,7 @@ struct VoidMessage
 
 
 // Debug message
-#ifndef NDEBUG
+#ifdef DEBUG
 #define DLOG(severity)  LOG(severity)
 #define DLOGF(severity, f)  LOGF(severity, f)
 #define DCHECK(severity, cond)  CHECK(severity, cond)
