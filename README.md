@@ -10,7 +10,13 @@ sudo apt-get install build-essential libboost-dev libboost-program-options-dev
 ## Compile
 
 ```bash
-CPPFLAGS="-D NDEBUG" make
+make
+```
+
+If you want to enable debug prints (SLOW!)
+
+```bash
+CPPFLAGS="-D DEBUG" make
 ```
 
 ## UART:
