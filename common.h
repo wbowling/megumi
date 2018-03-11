@@ -30,7 +30,7 @@ enum IntLvl {
 
 
 /// Map bit size to an appropriated unsigned integer type
-template <unsigned N> class nbits_to_utype;
+template <unsigned N> struct nbits_to_utype;
 template <> struct nbits_to_utype<8> { typedef uint8_t type; };
 template <> struct nbits_to_utype<16> { typedef uint16_t type; };
 template <> struct nbits_to_utype<24> { typedef uint32_t type; };
